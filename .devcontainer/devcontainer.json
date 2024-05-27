@@ -1,0 +1,28 @@
+{
+    "name": "PHP Development",
+	"build": {
+		// Sets the run context to one level up instead of the .devcontainer folder.
+		"context": "..",
+		// Update the 'dockerFile' property if you aren't using the standard 'Dockerfile' filename.
+		"dockerfile": "./Dockerfile"
+	},
+    "customizations": {
+        "vscode": {
+            "settings": {
+                "terminal.integrated.shell.linux": "/bin/bash",
+                "php.validate.executablePath": "/usr/local/bin/php"
+            },
+            "extensions": [
+                "felixfbecker.php-intellisense",
+                "felixfbecker.php-debug"
+            ]
+        }
+    },
+    "forwardPorts": [8000],
+    "postCreateCommand": "cd src && composer install",
+	"runArgs": [
+		"--add-host=redis-7.0.11-alpine:192.168.88.12",
+		"--add-host=mysql-8.0.33-debian:192.168.88.12",
+		"--add-host=rabbitmq-3.12.9-alpine:192.168.88.12"
+	]
+}

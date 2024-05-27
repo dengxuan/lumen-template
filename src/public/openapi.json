@@ -1,0 +1,471 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Lemen",
+        "description": "Lemen",
+        "contact": {
+            "name": "Gordon",
+            "email": "dengxuan@mail.com"
+        },
+        "license": {
+            "name": "MIT",
+            "url": "http://mit.com"
+        },
+        "version": "1.0"
+    },
+    "paths": {
+        "/auth/sign-up": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "注册",
+                "description": "Sign Up",
+                "operationId": "8060ba7cb59324131da8151d9518ca60",
+                "requestBody": {
+                    "description": "Sign Up",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "description": "Sign Up",
+                                "required": [
+                                    "name",
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "description": "user name",
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "description": "email address",
+                                        "type": "string",
+                                        "format": "email"
+                                    },
+                                    "password": {
+                                        "description": "password",
+                                        "type": "string",
+                                        "format": "password"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Ok"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                }
+            }
+        },
+        "/auth/sign-in": {
+            "get": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "登录",
+                "description": "Sign In",
+                "operationId": "e0b7c8d8644263dc40999db36845bf45",
+                "requestBody": {
+                    "description": "Sign Up",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "description": "Sign Up",
+                                "required": [
+                                    "name",
+                                    "password",
+                                    "remember"
+                                ],
+                                "properties": {
+                                    "username": {
+                                        "description": "User Name",
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "description": "Password",
+                                        "type": "string",
+                                        "format": "password"
+                                    },
+                                    "remember": {
+                                        "description": "Remember Me",
+                                        "type": "boolean"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Sign In"
+                    },
+                    "401": {
+                        "description": "Username or password is incorrect"
+                    }
+                }
+            }
+        },
+        "/auth/sign-out": {
+            "get": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "退出登录",
+                "operationId": "2ba7ac6160b931dbbaf130e2fe0fccb5",
+                "responses": {
+                    "200": {
+                        "description": "Sign Out"
+                    }
+                }
+            }
+        },
+        "/auth/refresh": {
+            "get": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "刷新令牌",
+                "operationId": "c8e8f0adcbc6cd891c3971bbe46d160c",
+                "responses": {
+                    "200": {
+                        "description": "Refresh token"
+                    }
+                }
+            }
+        },
+        "/api/roles/all": {
+            "get": {
+                "tags": [
+                    "Role"
+                ],
+                "summary": "Get all roles.",
+                "description": "Get all roles",
+                "operationId": "05ad782671dd100393016b2cbf76c8d1",
+                "responses": {
+                    "200": {
+                        "description": "Ok"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                }
+            }
+        },
+        "/api/roles/{name}": {
+            "get": {
+                "tags": [
+                    "Role"
+                ],
+                "summary": "Get the role by name.",
+                "description": "Get the role by name",
+                "operationId": "3a562e563ce5e597a5adbdc21a1b4592",
+                "responses": {
+                    "200": {
+                        "description": "Ok"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                }
+            }
+        },
+        "/api/roles": {
+            "post": {
+                "tags": [
+                    "Role"
+                ],
+                "summary": "Create a role.",
+                "description": "Create a role",
+                "operationId": "97b14ba5623e93b88311859dc964e8ff",
+                "requestBody": {
+                    "description": "Create a role",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "description": "Create a role",
+                                "required": [
+                                    "name"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "description": "role name",
+                                        "type": "string"
+                                    },
+                                    "description": {
+                                        "description": "role description",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Ok"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Role"
+                ],
+                "summary": "Delete all roles.",
+                "description": "Delete all roles",
+                "operationId": "f0aeb7735c4937a3ba858bad5ec9a241",
+                "responses": {
+                    "200": {
+                        "description": "Ok"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                }
+            }
+        },
+        "/api/roles/{id}": {
+            "put": {
+                "tags": [
+                    "Role"
+                ],
+                "summary": "Update a role.",
+                "description": "Update a role",
+                "operationId": "786d6990093a8eb3a56931f19a827e43",
+                "requestBody": {
+                    "description": "Update a role",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "description": "Update a role",
+                                "required": [
+                                    "name"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "description": "role name",
+                                        "type": "string"
+                                    },
+                                    "description": {
+                                        "description": "role description",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Ok"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Role"
+                ],
+                "summary": "Delete a role.",
+                "description": "Delete a role",
+                "operationId": "60cdff78b5d501c6f7c7d5395b98cd86",
+                "responses": {
+                    "200": {
+                        "description": "Ok"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                }
+            }
+        },
+        "/api/user/prefile": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "获取当前用户信息",
+                "description": "Get user prefile",
+                "operationId": "78b99a9ccf6b28a905f5fac3cdefdda7",
+                "responses": {
+                    "200": {
+                        "description": "User prefile"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                }
+            }
+        },
+        "/api/user/change-password": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "修改密码",
+                "description": "Change Password",
+                "operationId": "157894b6e5270c75e20d2661b242e883",
+                "requestBody": {
+                    "description": "Change Password",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "description": "Change Password",
+                                "required": [
+                                    "oldPassword",
+                                    "newPassword"
+                                ],
+                                "properties": {
+                                    "oldPassword": {
+                                        "description": "Old Password",
+                                        "type": "string",
+                                        "format": "password"
+                                    },
+                                    "newPassword": {
+                                        "description": "New Password",
+                                        "type": "string",
+                                        "format": "password"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Change Password"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                }
+            }
+        },
+        "/api/user/forget-password": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "忘记密码",
+                "description": "Forget Password",
+                "operationId": "6df7233d03d1a390c061d09ad97de62e",
+                "requestBody": {
+                    "description": "Forget Password",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "description": "Forget Password",
+                                "required": [
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "description": "Email Address",
+                                        "type": "string",
+                                        "format": "email"
+                                    },
+                                    "password": {
+                                        "description": "New Password",
+                                        "type": "string",
+                                        "format": "password"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Forget Password"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                }
+            }
+        },
+        "/api/user/reset-password": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "重置密码",
+                "description": "Reset Password",
+                "operationId": "b362df69192571540efd8a620898c7eb",
+                "requestBody": {
+                    "description": "Reset Password",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "description": "Reset Password",
+                                "required": [
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "description": "Email Address",
+                                        "type": "string",
+                                        "format": "email"
+                                    },
+                                    "password": {
+                                        "description": "New Password",
+                                        "type": "string",
+                                        "format": "password"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Reset Password"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Auth",
+            "description": "Auth Api Controller."
+        },
+        {
+            "name": "Role",
+            "description": "Role Api Controller."
+        },
+        {
+            "name": "User",
+            "description": "User Api Controller."
+        }
+    ]
+}
