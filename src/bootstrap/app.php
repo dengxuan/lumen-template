@@ -48,6 +48,11 @@ $app->singleton(
     App\Console\Kernel::class
 );
 
+$app->singleton(
+    Illuminate\Console\Scheduling\Schedule::class, function ($app) {
+    return new Illuminate\Console\Scheduling\Schedule;
+});
+
 /*
 |--------------------------------------------------------------------------
 | Register Config Files
@@ -92,6 +97,7 @@ $app->register(App\Providers\AppServiceProvider::class);
 $app->register(App\Providers\AuthServiceProvider::class);
 $app->register(App\Providers\EventServiceProvider::class);
 $app->register(App\Providers\DomainServiceProvider::class);
+$app->register(App\Providers\ScheduleMonitorServiceProvider::class);
 
 /*
 |--------------------------------------------------------------------------

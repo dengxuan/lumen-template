@@ -1,5 +1,7 @@
 FROM php:8.3.6-apache as base
 
+EXPOSE 80
+
 #
 #--------------------------------------------------------------------------
 # update api-get module
@@ -71,6 +73,8 @@ RUN docker-php-ext-enable redis
 #
 RUN a2enmod rewrite
 
+FROM base as builder
+
 #
 #--------------------------------------------------------------------------
 # 安装 PHP composer
@@ -78,4 +82,58 @@ RUN a2enmod rewrite
 #
 RUN curl -sL https://getcomposer.org/installer | php -- --install-dir /usr/bin --filename composer
 
-ENTRYPOINT [ "/bin/bash" ]
+#
+#--------------------------------------------------------------------------
+# 添加源码
+#--------------------------------------------------------------------------
+#
+WORKDIR /scripts
+COPY src .
+RUN mv .env.prod .env
+
+#####################################
+# 安装php依赖模块，发布队列
+#####################################
+RUN composer install --no-dev
+RUN composer dump-autoload
+
+#
+#--------------------------------------------------------------------------
+# 完成
+#--------------------------------------------------------------------------
+#
+FROM base as final
+
+ADD docker-entrypoint.sh /usr/local/bin/
+
+#####################################
+# 配置守护进程
+#####################################
+ADD supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+
+#####################################
+# 添加源码，发布horizon和admin，执行优化
+#####################################
+WORKDIR /var/www/html
+
+COPY --from=builder /scripts .
+
+RUN mkdir -p bootstrap/cache
+
+#####################################
+# 修改权限
+#####################################
+RUN chown www-data:www-data storage -R
+RUN chown www-data:www-data bootstrap/cache -R
+RUN chmod 777 storage -R
+RUN chmod 777 bootstrap/cache -R
+
+#####################################
+# 设置httpd根目录
+#####################################
+ENV APACHE_DOCUMENT_ROOT /var/www/html/public
+
+RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
+RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
+
+CMD ["docker-entrypoint.sh"]

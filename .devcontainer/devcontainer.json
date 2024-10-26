@@ -6,6 +6,10 @@
 		// Update the 'dockerFile' property if you aren't using the standard 'Dockerfile' filename.
 		"dockerfile": "./Dockerfile"
 	},
+    // Features to add to the dev container. More info: https://containers.dev/features.
+	"features": {
+		"ghcr.io/devcontainers/features/git:1": {}
+	},
     "customizations": {
         "vscode": {
             "settings": {
@@ -18,11 +22,10 @@
             ]
         }
     },
-    "forwardPorts": [8000],
-    "postCreateCommand": "cd src && composer install",
+    "postCreateCommand": "/bin/bash ${containerWorkspaceFolder}/.devcontainer/setup.sh",
 	"runArgs": [
-		"--add-host=redis-7.0.11-alpine:192.168.88.12",
-		"--add-host=mysql-8.0.33-debian:192.168.88.12",
-		"--add-host=rabbitmq-3.12.9-alpine:192.168.88.12"
+		"--add-host=redis-7.0.11-alpine:192.168.37.110",
+		"--add-host=mysql-8.0.33-debian:192.168.37.110",
+		"--add-host=rabbitmq-3.12.9-alpine:192.168.37.110"
 	]
 }
